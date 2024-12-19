@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stormveil
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: stormveil
+  template:
+    metadata:
+      labels:
+        app: stormveil
+    spec:
+      containers:
+      - name: stormveil
+        image: <username>/stormveil:latest
+        ports:
+        - containerPort: 3000
+        readinessProbe:
+          httpGet:
+            path: /graphql
+            port: 3000
+        livenessProbe:
+          httpGet:
+            path: /graphql
+            port: 3000
